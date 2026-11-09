@@ -1,0 +1,13 @@
+# Imaging data must never be committed (download from OpenNeuro instead)
+data/
+raw/
+derivatives/
+*.nii
+*.nii.gz
+*.mgz
+*.dcm
+# Colab / Python clutter
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+.DS_Store

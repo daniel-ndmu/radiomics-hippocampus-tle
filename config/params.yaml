@@ -1,0 +1,17 @@
+# PyRadiomics parameters (pre-specified in the proposal, Section 4)
+# Images are z-scored per subject (clipped at ±3) before extraction, so normalize=False.
+setting:
+  binWidth: 0.05          # z units; up to 120 grey levels within ±3
+  normalize: false
+  label: 1
+  geometryTolerance: 0.0001
+imageType:
+  Original: {}
+featureClass:
+  shape: []               # T1 only (disabled for FLAIR in code)
+  firstorder: []
+  glcm: []
+  glrlm: []
+  glszm: []
+  gldm: []
+  ngtdm: []

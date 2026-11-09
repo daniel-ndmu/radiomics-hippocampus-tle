@@ -1,0 +1,17 @@
+# Pre-specified analysis settings (proposal Sections 3–5). Do not widen after modelling starts.
+seed: 2026
+split:
+  test_size: 0.30          # patient-level, stratified by side
+  positive_class: right    # event = right-sided mTLE (minority class)
+stability:
+  icc_min: 0.75            # ICC(3,1) over original / eroded / dilated masks, computed in training folds only
+  corr_max: 0.90           # Spearman redundancy filter, in folds
+model:
+  k_max_features: 5        # training events 59 / 10, rounded down
+  lasso_C_grid: {start_exp: -3, stop_exp: 1, num: 30}
+  rf_grid: {n_estimators: [300, 500, 1000], max_depth: [3, 5, null]}
+  cv: {n_splits: 5, n_repeats: 5}
+evaluation:
+  n_bootstrap: 1000
+  primary_hypothesis_delta_auc: 0.05   # model C vs model A on the held-out test set
+  max_cv_test_gap: 0.05

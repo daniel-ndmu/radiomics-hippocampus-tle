@@ -1,0 +1,12 @@
+# Pin exact versions after the first successful Colab run (the notebook writes versions.json).
+pyradiomics
+SimpleITK
+nibabel
+neuroCombat
+openneuro-py
+scikit-learn
+pandas
+numpy
+scipy
+matplotlib
+pyyaml
