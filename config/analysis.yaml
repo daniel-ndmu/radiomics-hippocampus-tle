@@ -1,11 +1,16 @@
 # Pre-specified analysis settings (proposal Sections 3–5). Do not widen after modelling starts.
+# Amendment 2026-11-25 (before the held-out test set is opened): see docs/計畫書補充說明_20261125.md
 seed: 2026
 split:
   test_size: 0.30          # patient-level, stratified by side
   positive_class: right    # event = right-sided mTLE (minority class)
 stability:
+  fold_order: combat_then_icc     # [B3, 2026-11-25] ComBat fitted on original-mask features of the training fold, same estimates applied to eroded/dilated versions, then ICC
   icc_min: 0.75            # ICC(3,1) over original / eroded / dilated masks, computed in training folds only
+  icc_form: "ICC(3,1)"     # [B4, 2026-11-25] unchanged from proposal; documented explicitly
+  icc_level: asymmetry_index   # [B4, 2026-11-25] ICC computed on the L/R asymmetry index, not on single-side features
   corr_max: 0.90           # Spearman redundancy filter, in folds
+  redundancy_reference: vol_ai # [B1, 2026-11-25] vol_ai is treated as already kept; radiomics features with |rho| > corr_max vs vol_ai are removed
 model:
   k_max_features: 5        # training events 59 / 10, rounded down
   lasso_C_grid: {start_exp: -3, stop_exp: 1, num: 30}
@@ -15,3 +20,5 @@ evaluation:
   n_bootstrap: 1000
   primary_hypothesis_delta_auc: 0.05   # model C vs model A on the held-out test set
   max_cv_test_gap: 0.05
+  cv_auc_model_C: nested   # [B2, 2026-11-25] outer = cv above; inner tunes C with the same 30-point grid
+  inner_cv: {n_splits: 5, shuffle: true}   # [B2, 2026-11-25] models A (untuned), B and C-RF (exploratory) unchanged

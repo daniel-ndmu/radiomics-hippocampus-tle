@@ -32,10 +32,32 @@ results/     特徵矩陣、模型結果、圖表（執行後產生）
 
 - 切分單位是病人；左右海馬迴合併為同一人的不對稱特徵。
 - 切分前只做逐一受試者的運算（前處理、萃取、不對稱指標）。
-- ComBat、ICC 篩選、冗餘移除、標準化、LASSO 全部在交叉驗證的摺內執行。
-- 保留測試集只開啟一次（`open_test_once()` 第二次呼叫會報錯）。
+- ComBat、ICC 篩選、冗餘移除、標準化、LASSO 全部在交叉驗證的摺內執行；模型 C 的訓練集 CV AUC 以巢狀交叉驗證估計。
+- 保留測試集只開啟一次（`open_test_once()` 第二次呼叫會報錯）；開啟前以 Git tag `pre-test-lock` 標記程式與設定版本。
+
+## 分割穩定性與特徵篩選設定
+
+- 分割：IDEAS 公開、經人工檢查的 FreeSurfer 7.3.2 `aseg`（海馬迴 17／53；杏仁核 18／54 為探索性對照）。
+- 擾動：每個海馬迴遮罩另做 1 體素侵蝕與 1 體素膨脹（SimpleITK，3D），三版本都萃取特徵；擾動強度（Dice、體積變化 %）輸出於 `perturbation_stats.csv`。
+- ICC：ICC(3,1)，在**左右不對稱指標**層級計算，門檻 0.75，只用訓練摺受試者。
+- 摺內順序：ComBat（原始版本估計、同參數套用到侵蝕／膨脹版本）→ ICC → 冗餘移除（Spearman |ρ| ≤ 0.90，以 `vol_ai` 為參照）→ 標準化 → LASSO（≤ 5 個）。
+- 以上於 2026-11-25、開啟測試集前寫定，見 `docs/計畫書補充說明_20261125.md`。
+
+## 輸出檔（`results/`，執行後產生）
+
+| 檔案 | 內容 |
+|---|---|
+| `features_AI_v0/v1/v2.csv` | 原始版特徵矩陣（原始／侵蝕／膨脹遮罩的不對稱指標） |
+| `features_AI_filtered_train.csv`、`features_AI_filtered_test.csv` | 篩選後版特徵矩陣（ICC＋冗餘移除後） |
+| `perturbation_stats.csv` | 遮罩擾動強度 |
+| `stability_summary.json`、`icc_train_final.csv` | ICC 與篩選摘要 |
+| `nested_cv_C.csv`、`selection_frequency_C.csv` | 模型 C 巢狀 CV 結果、穩定度選擇頻率 |
+| `test_results.csv`、`fig_test.png`、`selected_features_C.csv` | 保留測試集結果（只開啟一次） |
+| `versions.json` | 套件版本 |
 
 ## 可重現性
+
+- OpenNeuro 資料集編號與下載版本：（下載後填入，例如 `dsXXXXXX` v1.0.0）。
 
 - 隨機種子 2026；分析設定見 `config/analysis.yaml`，建模開始後不再擴充。
 - notebook 自動輸出 `versions.json`（套件版本）；第一次成功執行後，請據此鎖定 `requirements.txt` 的版本。
