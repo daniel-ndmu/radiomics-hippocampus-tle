@@ -20,5 +20,8 @@ evaluation:
   n_bootstrap: 1000
   primary_hypothesis_delta_auc: 0.05   # model C vs model A on the held-out test set
   max_cv_test_gap: 0.05
+  gap_direction: one_sided_cv_minus_test   # [B7, 2026-11-25] pass if (nested CV AUC - test AUC) < 0.05; test exceeding CV is reported as sampling variability
+  alpha: 0.05
+  hypothesis_decision: three_tier         # [B6, 2026-11-25] support: dAUC >= 0.05 and DeLong P < 0.05; increment below threshold: P < 0.05 and 0 < dAUC < 0.05; not demonstrated: P >= 0.05
   cv_auc_model_C: nested   # [B2, 2026-11-25] outer = cv above; inner tunes C with the same 30-point grid
   inner_cv: {n_splits: 5, shuffle: true}   # [B2, 2026-11-25] models A (untuned), B and C-RF (exploratory) unchanged
