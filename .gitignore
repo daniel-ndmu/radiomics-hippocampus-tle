@@ -11,3 +11,5 @@ __pycache__/
 .ipynb_checkpoints/
 *.pyc
 .DS_Store
+# Copyrighted references (papers, course handouts) — local only, never push to GitHub
+references/
