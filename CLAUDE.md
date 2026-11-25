@@ -17,15 +17,20 @@
 8. 引用文獻必須能在 PubMed 檢索；不確定的書目不要寫入。
 
 ## 目前狀態
-- `notebooks/hippocampal_radiomics_TLE_colab_v2.ipynb`：M4–M5 已在本機以示範資料跑通；M3（PyRadiomics 萃取）尚未在 Colab 實際執行。
+- `notebooks/hippocampal_radiomics_TLE_colab_v2.ipynb`：2026-11-25 已在 Colab 以示範模式完整跑通 M0–M5（M4 巢狀 CV 約 13 分鐘）；尚未下載真實資料。
 - 2026-11-25（開啟保留測試集前）寫定計畫書補充說明 B1–B4，見 `docs/計畫書補充說明_20261125.md`；設定同步於 `config/analysis.yaml`（標註 B1–B4），notebook M4–M5 已依此修正：
   - B1 冗餘移除以 `vol_ai` 為已保留的參照（與其 |ρ| > 0.90 的特徵移除）。
   - B2 模型 C 的訓練集 CV AUC 以巢狀 CV 估計（外層 5 摺 × 5 次，內層 5 摺選 C）；B、C-RF 維持非巢狀並標示探索性。
   - B3 摺內順序為 ComBat → ICC（ComBat 以原始遮罩版本估計，同參數套用到侵蝕／膨脹版本）。
   - B4 ICC(3,1) 在左右不對稱指標層級計算，門檻 0.75。
+- 同日追加（皆在開啟測試集前）：
+  - B6 主要假說三級判定：ΔAUC ≥ 0.05 且 DeLong P < 0.05＝支持；P < 0.05 且 0 < ΔAUC < 0.05＝有增量但未達預設門檻；P ≥ 0.05＝本樣本無法證明增量。
+  - B7 假說第二條為單向：巢狀 CV AUC − 測試 AUC < 0.05；測試高於 CV 視為抽樣變異。
+  - neuroCombat 0.2.12 的 `neuroCombatFromTraining` 與 NumPy 2.x 不相容，改用 notebook 內 `combat_from_training`（計算相同）；三個遮罩版本一律用同一函式調和。
+  - `requirements.txt` 鎖定 Colab 實測版本；PyRadiomics 固定於 GitHub commit 8ed5793（PyPI 版在 Python 3.13 無法編譯）。
 - 補充說明不改主要假說、不擴充超參數範圍、不新增模型；之後不得再以補充說明為由修改這些項目。
 - 計畫書中標示「待確認」的人數（排除流程、HS 與 ILAE 事件數）需下載資料後填入並凍結。
 
-## 下一步（W11）
-- 在 Colab 確認 PyRadiomics 可安裝，並先下載 2–3 位受試者確認 IDEAS 的檔案結構與單人資料量。
+## 下一步
+- 下載 2–3 位受試者，確認 IDEAS 的檔案結構與單人資料量；查 FLAIR 缺漏人數與 HS、ILAE 事件數（M1 填入後凍結）。
 - notebook 目前在程式內寫定參數（M0、M3）；`config/params.yaml` 與 `config/analysis.yaml` 是同一組數值的文件版本。之後可改為由 notebook 直接讀取 config，避免兩處不一致。
