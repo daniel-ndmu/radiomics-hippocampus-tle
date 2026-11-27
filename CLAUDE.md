@@ -34,5 +34,7 @@
 - 計畫書中標示「待確認」的人數（排除流程、HS 與 ILAE 事件數）需下載資料後填入並凍結。
 
 ## 下一步
-- 改寫 M2：逐人下載 OpenNeuro T1／FLAIR 與 figshare FreeSurfer（只取 aseg.mgz、orig.mgz、aseg.stats），產生品管疊圖與 qc_decisions.csv；品管完成後才切分。
+- 2026-11-27：M1a（世代）、M2a（逐人下載）、M2b（對齊檢查、海馬迴體積、品管縮圖）、M1b（品管後切分）、M3（FLAIR 配準與逐人萃取、可續跑）已寫入 notebook；示範模式跑通，真實資料段落以離線測試驗證過下載解壓、stats 解析、縮圖繪製，**SimpleITK 配準與 nibabel 轉檔尚未在 Colab 實測**。
+- 先在 Colab 用 2–3 位受試者試跑 M2a、M2b、M3，再跑全部。
+- 待補：產生 `meta.csv` 的程式（`_batch` 協定分群規則須在建模前寫定，另列補充說明）。
 - notebook 目前在程式內寫定參數（M0、M3）；`config/params.yaml` 與 `config/analysis.yaml` 是同一組數值的文件版本。之後可改為由 notebook 直接讀取 config，避免兩處不一致。

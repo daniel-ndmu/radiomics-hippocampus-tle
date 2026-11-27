@@ -35,6 +35,13 @@ results/     特徵矩陣、模型結果、圖表（執行後產生）
 - ComBat、ICC 篩選、冗餘移除、標準化、LASSO 全部在交叉驗證的摺內執行；模型 C 的訓練集 CV AUC 以巢狀交叉驗證估計。
 - 保留測試集只開啟一次（`open_test_once()` 第二次呼叫會報錯）；開啟前以 Git tag `pre-test-lock` 標記程式與設定版本。
 
+## 真實資料的下載與存放
+
+- 執行順序：M1a 世代篩選 → M2a 逐人下載 → M2b 對齊檢查與分割品管 → M1b 品管後切分 → M3 萃取 → M4 → M5。
+- `config/figshare_freesurfer_files.csv`：figshare freesurfer_zip 的 542 個檔案清單（file_id、檔名、大小、MD5），2026-11-27 取得；下載時逐檔核對 MD5。
+- Drive 上每位受試者一個資料夾 `subjects/sub-<ID>/`：`T1w.nii.gz`、`FLAIR.nii.gz`、JSON、`aseg.nii.gz`、`orig.nii.gz`、`aseg.stats`、`flair_to_t1.tfm`、`features.json`。影像只存在 Drive，不進 repo。
+- 品管：M2b 產生 `qc/qc_page_*.png`（不顯示側別與病理）與 `qc/qc_decisions_template.csv`；判讀結果存為 `qc_decisions.csv`（收／退）。
+
 ## 分割穩定性與特徵篩選設定
 
 - 分割：IDEAS 公開、經人工檢查的 FreeSurfer 7.3.2 `aseg`（海馬迴 17／53；杏仁核 18／54 為探索性對照）。
