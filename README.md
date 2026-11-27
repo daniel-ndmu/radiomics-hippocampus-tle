@@ -57,7 +57,8 @@ results/     特徵矩陣、模型結果、圖表（執行後產生）
 
 ## 可重現性
 
-- OpenNeuro 資料集編號與下載版本：（下載後填入，例如 `dsXXXXXX` v1.0.0）。
+- OpenNeuro 資料集編號與版本：`ds005602` v1.0.0（2024-10-28，doi:10.18112/openneuro.ds005602.v1.0.0），只含原始 T1w 與 FLAIR。
+- FreeSurfer 分割、臨床與人口學資料表、切除遮罩由 IDEAS 團隊放在 figshare，連結見 OpenNeuro 的 README 與 cnnp-lab.com/ideas-data；實際使用的檔案與下載日期於第一次下載後填入。
 
 - 隨機種子 2026；分析設定見 `config/analysis.yaml`，建模開始後不再擴充。
 - notebook 自動輸出 `versions.json`（套件版本）；第一次成功執行後，請據此鎖定 `requirements.txt` 的版本。

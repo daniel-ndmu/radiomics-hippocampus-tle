@@ -1,6 +1,8 @@
 # Pre-specified analysis settings (proposal Sections 3–5). Do not widen after modelling starts.
 # Amendment 2026-11-25 (before the held-out test set is opened): see docs/計畫書補充說明_20261125.md
 seed: 2026
+inclusion:
+  age: all_age_bands       # [B8, 2026-11-27] include all patients (minimum age at surgery 16); not restricted to >= 18; stated as a limitation
 split:
   test_size: 0.30          # patient-level, stratified by side
   positive_class: right    # event = right-sided mTLE (minority class)
