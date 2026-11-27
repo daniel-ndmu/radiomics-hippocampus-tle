@@ -36,7 +36,7 @@
 - 計畫書中標示「待確認」的人數（排除流程、HS 與 ILAE 事件數）需下載資料後填入並凍結。
 
 ## 下一步
-- 以 `PILOT_N = 3` 重跑試跑，確認 HBT 標籤（226／231／232）存在、aseg 與 HBT 的 Dice 合理、M3 四個版本都萃取成功；再設 `PILOT_N = None` 跑全部 244 人。
+- 2026-11-27 HBT 試跑通過（標籤 226／231／232 存在；aseg vs HBT Dice 0.78–0.84；M3 四個版本萃取成功、每人約 1.5–2.3 分鐘）。正式跑全部 244 人進行中（`PILOT_N = None`）。
 - 品管判讀（收／退）→ M1b 切分 → 填入排除流程人數並凍結。
 - 待補：產生 `meta.csv` 的程式（`_batch` 協定分群規則須在建模前寫定，另列補充說明）。
-- notebook 目前在程式內寫定參數（M0、M3）；`config/params.yaml` 與 `config/analysis.yaml` 是同一組數值的文件版本。之後可改為由 notebook 直接讀取 config，避免兩處不一致。
+- 2026-11-27 M0 改為三格（依 W03 原則）：M0-1 clone repo 並安裝 `requirements-colab.txt`（`REPO_REF` 期末改定版 tag）；M0-2 從 `config/analysis.yaml` 讀入全部事先寫定參數並與寫定值核對；M0-3 掛載 Drive（自動重試）、寫入測試、`versions.json`（含 repo commit）。PyRadiomics 參數改讀 `config/params.yaml`。

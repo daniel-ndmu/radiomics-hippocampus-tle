@@ -1,4 +1,5 @@
 # Pre-specified analysis settings (proposal Sections 3–5). Do not widen after modelling starts.
+# The notebook (M0-2) reads every value from this file and checks them against the pre-registered values.
 # Amendment 2026-11-25 (before the held-out test set is opened): see docs/計畫書補充說明_20261125.md
 seed: 2026
 inclusion:
@@ -14,6 +15,7 @@ split:
 stability:
   fold_order: combat_then_icc     # [B3, 2026-11-25; B11 2026-11-27] ComBat fitted on aseg-version features of the training fold, same estimates applied to the HBT version, then ICC
   icc_segmentations: [freesurfer_aseg, hippocampal_subfield_HBT]   # [B11, 2026-11-27] two independent algorithms; HBT labels 226/231/232 (tail/body/head)
+  hbt_labels: [226, 231, 232]   # [B11, 2026-11-27] HP_tail, HP_body, HP_head in [lr]h.hippoAmygLabels.HBT.FSvoxelSpace.mgz (fissure 215 and amygdala excluded)
   perturbation_erode_dilate: exploratory_only   # [B11, 2026-11-27] 1-voxel erode/dilate of aseg: extracted and reported, not used for filtering
   icc_min: 0.75            # ICC(3,1) over aseg vs HBT segmentations (B11), computed in training folds only
   icc_form: "ICC(3,1)"     # [B4, 2026-11-25] unchanged from proposal; documented explicitly

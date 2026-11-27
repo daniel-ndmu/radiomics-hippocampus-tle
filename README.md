@@ -24,9 +24,10 @@ results/     特徵矩陣、模型結果、圖表（執行後產生）
 ## 在 Colab 執行
 
 1. 在 Colab 以「從 GitHub 開啟」載入 `notebooks/hippocampal_radiomics_TLE_colab_v2.ipynb`。
-2. 示範模式（預設 `DEMO_MODE = True`）：驗證 PyRadiomics 萃取，並以模擬資料演練完整流程；示範數字不是研究結果。
-3. 真實資料：設定 `DEMO_MODE = False`，填入 IDEAS 的 OpenNeuro 編號 `DATASET_ID`，並依 `participants.tsv` 的實際欄位修改 `COLS`。
-4. 中間結果存到 Google Drive，可中斷後續跑。
+2. **M0-1**：自動 clone 本 repo 並安裝 `requirements-colab.txt`（PyRadiomics、neuroCombat、SimpleITK 固定版本與 nibabel）。`REPO_REF` 平時用 `"main"`；期末重現改成定版的 tag（例如 `pre-test-lock`），即可取得與報告數字相同的程式版本。斷線或重新啟動後，從這一格重跑。
+3. **M0-2**：選擇模式。`DEMO_MODE = True`（預設）以 PyRadiomics 示範影像與模擬特徵演練完整流程，示範數字不是研究結果；真實資料設 `DEMO_MODE = False`，試跑再設 `PILOT_N = 3`。事先寫定的參數全部讀自 `config/analysis.yaml`，並與計畫書寫定值逐項核對，不符即停止。
+4. **M0-3**：掛載 Google Drive（失敗會自動重試一次並列出處理方式），在 `ideas_radiomics/` 做寫入測試，環境紀錄寫入 `versions.json`（套件版本、repo commit、執行時間、與 `requirements.txt` 不同的套件）。
+5. 真實資料：把 figshare tables_metadata 的三個檔放到 Drive 的 `ideas_radiomics/metadata/`，再依 notebook 末尾的執行順序與檢查清單進行。中間結果都在 Drive，M2a、M3 可續跑。
 
 ## 防洩漏設計（對應課程「洩漏自我稽核五問」）
 
@@ -70,8 +71,8 @@ results/     特徵矩陣、模型結果、圖表（執行後產生）
 - FreeSurfer：figshare freesurfer_zip，每人一個 `<ID>.tar.gz`，下載連結格式 `https://ndownloader.figshare.com/files/<file_id>?private_link=b13b8bb41390d3f7a088`（2026-11-27 實測：`figshare.com/ndownloader/...` 對程式下載回傳驗證頁，須用 `ndownloader.figshare.com` 網域）；只取出 `mri/aseg.mgz`、`mri/orig.mgz`、`stats/aseg.stats`。
 - FreeSurfer 分割、臨床與人口學資料表、切除遮罩由 IDEAS 團隊放在 figshare，連結見 OpenNeuro 的 README 與 cnnp-lab.com/ideas-data；實際使用的檔案與下載日期於第一次下載後填入。
 
-- 隨機種子 2026；分析設定見 `config/analysis.yaml`，建模開始後不再擴充。
-- notebook 自動輸出 `versions.json`（套件版本）；第一次成功執行後，請據此鎖定 `requirements.txt` 的版本。
+- 隨機種子 2026；分析設定只寫在 `config/analysis.yaml`（PyRadiomics 參數只寫在 `config/params.yaml`），建模開始後不再擴充。
+- `requirements-colab.txt`：notebook 實際安裝的套件；`requirements.txt`：完整環境（Colab 內建套件只核對、不強制改版，差異寫入 `versions.json`）。
 
 ## 進度
 

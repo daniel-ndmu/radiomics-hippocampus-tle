@@ -1,0 +1,8 @@
+# Installed by the notebook (M0-1) in Google Colab. Verified 2026-11-25/27 on Colab (Python 3.13).
+# Only packages that Colab does not provide, or whose version changes feature values, are pinned and installed here.
+# Colab built-ins (numpy, pandas, scipy, scikit-learn, PyYAML, matplotlib, requests) are NOT force-installed;
+# their actual versions are written to versions.json and compared with requirements.txt.
+pyradiomics @ git+https://github.com/AIM-Harvard/pyradiomics.git@8ed579383b44806651c463d5e691f3b2b57522ab
+neuroCombat==0.2.12
+SimpleITK==2.5.8
+nibabel

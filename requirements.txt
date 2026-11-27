@@ -1,4 +1,5 @@
-# Versions verified in Google Colab on 2026-11-25 (Python 3.13), demo mode M0–M5.
+# Full environment as verified in Google Colab on 2026-11-25 (Python 3.13), demo mode M0–M5.
+# The notebook installs only requirements-colab.txt; the Colab built-in versions below are checked, not forced (see versions.json).
 # PyRadiomics: the PyPI release does not build on Python 3.13, so it is pinned to an exact GitHub commit
 # (reported as 3.1.1.dev111+g8ed579383). The proposal planned 3.1.0; see docs/計畫書補充說明_20261125.md.
 pyradiomics @ git+https://github.com/AIM-Harvard/pyradiomics.git@8ed579383b44806651c463d5e691f3b2b57522ab
@@ -9,7 +10,7 @@ pandas==2.2.3
 scipy==1.16.3
 scikit-learn==1.6.1
 PyYAML==6.0.3
-# Not yet pinned (versions to be recorded on the first real-data run):
+# Not yet pinned (versions recorded in versions.json on the real-data run):
 nibabel
-openneuro-py
 matplotlib
+requests
