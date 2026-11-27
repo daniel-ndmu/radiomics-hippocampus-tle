@@ -12,8 +12,10 @@ split:
   test_size: 0.30          # patient-level, stratified by side
   positive_class: right    # event = right-sided mTLE (minority class)
 stability:
-  fold_order: combat_then_icc     # [B3, 2026-11-25] ComBat fitted on original-mask features of the training fold, same estimates applied to eroded/dilated versions, then ICC
-  icc_min: 0.75            # ICC(3,1) over original / eroded / dilated masks, computed in training folds only
+  fold_order: combat_then_icc     # [B3, 2026-11-25; B11 2026-11-27] ComBat fitted on aseg-version features of the training fold, same estimates applied to the HBT version, then ICC
+  icc_segmentations: [freesurfer_aseg, hippocampal_subfield_HBT]   # [B11, 2026-11-27] two independent algorithms; HBT labels 226/231/232 (tail/body/head)
+  perturbation_erode_dilate: exploratory_only   # [B11, 2026-11-27] 1-voxel erode/dilate of aseg: extracted and reported, not used for filtering
+  icc_min: 0.75            # ICC(3,1) over aseg vs HBT segmentations (B11), computed in training folds only
   icc_form: "ICC(3,1)"     # [B4, 2026-11-25] unchanged from proposal; documented explicitly
   icc_level: asymmetry_index   # [B4, 2026-11-25] ICC computed on the L/R asymmetry index, not on single-side features
   corr_max: 0.90           # Spearman redundancy filter, in folds

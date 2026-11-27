@@ -39,22 +39,23 @@ results/     特徵矩陣、模型結果、圖表（執行後產生）
 
 - 執行順序：M1a 世代篩選 → M2a 逐人下載 → M2b 對齊檢查與分割品管 → M1b 品管後切分 → M3 萃取 → M4 → M5。
 - `config/figshare_freesurfer_files.csv`：figshare freesurfer_zip 的 542 個檔案清單（file_id、檔名、大小、MD5），2026-11-27 取得；下載時逐檔核對 MD5。
-- Drive 上每位受試者一個資料夾 `subjects/sub-<ID>/`：`T1w.nii.gz`、`FLAIR.nii.gz`、JSON、`aseg.nii.gz`、`orig.nii.gz`、`aseg.stats`、`flair_to_t1.tfm`、`features.json`。影像只存在 Drive，不進 repo。
+- Drive 上每位受試者一個資料夾 `subjects/sub-<ID>/`：`T1w.nii.gz`、`FLAIR.nii.gz`、JSON、`aseg.nii.gz`、`orig.nii.gz`、`aseg.stats`、`hbt_lh.nii.gz`、`hbt_rh.nii.gz`、`flair_to_t1.tfm`、`features.json`。影像只存在 Drive，不進 repo。
 - 品管：M2b 產生 `qc/qc_page_*.png`（不顯示側別與病理）與 `qc/qc_decisions_template.csv`；判讀結果存為 `qc_decisions.csv`（收／退）。
 
 ## 分割穩定性與特徵篩選設定
 
 - 分割：IDEAS 公開、經人工檢查的 FreeSurfer 7.3.2 `aseg`（海馬迴 17／53；杏仁核 18／54 為探索性對照）。
-- 擾動：每個海馬迴遮罩另做 1 體素侵蝕與 1 體素膨脹（SimpleITK，3D），三版本都萃取特徵；擾動強度（Dice、體積變化 %）輸出於 `perturbation_stats.csv`。
-- ICC：ICC(3,1)，在**左右不對稱指標**層級計算，門檻 0.75，只用訓練摺受試者。
-- 摺內順序：ComBat（原始版本估計、同參數套用到侵蝕／膨脹版本）→ ICC → 冗餘移除（Spearman |ρ| ≤ 0.90，以 `vol_ai` 為參照）→ 標準化 → LASSO（≤ 5 個）。
+- 兩套分割（B11）：FreeSurfer `aseg`（主要）與 FreeSurfer 海馬迴亞區模組的 HBT（`[lr]h.hippoAmygLabels.HBT.FSvoxelSpace.mgz`，取標籤 226／231／232）。兩者的 Dice 輸出於 `volumes_alignment.csv`。
+- ICC：ICC(3,1)，以 aseg 與 HBT 兩套分割、在**左右不對稱指標**層級計算，門檻 0.75，只用訓練摺受試者。
+- 擾動（探索性）：aseg 另做 1 體素侵蝕與膨脹（SimpleITK，3D）並萃取；擾動強度輸出於 `perturbation_stats.csv`，擾動 ICC 輸出於 `icc_train_final.csv`，只報告、不用於篩選。
+- 摺內順序：ComBat（aseg 版本估計、同參數套用到 HBT 版本）→ ICC → 冗餘移除（Spearman |ρ| ≤ 0.90，以 `vol_ai` 為參照）→ 標準化 → LASSO（≤ 5 個）。
 - 以上於 2026-11-25、開啟測試集前寫定，見 `docs/計畫書補充說明_20261125.md`。
 
 ## 輸出檔（`results/`，執行後產生）
 
 | 檔案 | 內容 |
 |---|---|
-| `features_AI_v0/v1/v2.csv` | 原始版特徵矩陣（原始／侵蝕／膨脹遮罩的不對稱指標） |
+| `features_AI_v0/hbt/ero/dil.csv` | 原始版特徵矩陣（aseg／HBT／侵蝕／膨脹的不對稱指標） |
 | `features_AI_filtered_train.csv`、`features_AI_filtered_test.csv` | 篩選後版特徵矩陣（ICC＋冗餘移除後） |
 | `perturbation_stats.csv` | 遮罩擾動強度 |
 | `stability_summary.json`、`icc_train_final.csv` | ICC 與篩選摘要 |
