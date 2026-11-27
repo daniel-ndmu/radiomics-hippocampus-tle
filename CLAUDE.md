@@ -28,9 +28,11 @@
   - B7 假說第二條為單向：巢狀 CV AUC − 測試 AUC < 0.05；測試高於 CV 視為抽樣變異。
   - neuroCombat 0.2.12 的 `neuroCombatFromTraining` 與 NumPy 2.x 不相容，改用 notebook 內 `combat_from_training`（計算相同）；三個遮罩版本一律用同一函式調和。
   - `requirements.txt` 鎖定 Colab 實測版本；PyRadiomics 固定於 GitHub commit 8ed5793（PyPI 版在 Python 3.13 無法編譯）。
+- 2026-11-27 追加（尚未切分、未看影像特徵）：B8 年齡級距全納入；B9 世代＝Op_Type T Lx 且 Pathology ∈ {HS, OTHER}；B10 無 3D FLAIR 者排除。依臨床資料表試算：316 → 257 → 244 人（左 135、右 109；HS 205、非 HS 39），尚未扣除分割品管退件。
+- 資料來源：OpenNeuro ds005602 v1.0.0（原始 T1w、FLAIR）；FreeSurfer 與臨床資料表在 figshare（見 README）。
 - 補充說明不改主要假說、不擴充超參數範圍、不新增模型；之後不得再以補充說明為由修改這些項目。
 - 計畫書中標示「待確認」的人數（排除流程、HS 與 ILAE 事件數）需下載資料後填入並凍結。
 
 ## 下一步
-- 下載 2–3 位受試者，確認 IDEAS 的檔案結構與單人資料量；查 FLAIR 缺漏人數與 HS、ILAE 事件數（M1 填入後凍結）。
+- 改寫 M2：逐人下載 OpenNeuro T1／FLAIR 與 figshare FreeSurfer（只取 aseg.mgz、orig.mgz、aseg.stats），產生品管疊圖與 qc_decisions.csv；品管完成後才切分。
 - notebook 目前在程式內寫定參數（M0、M3）；`config/params.yaml` 與 `config/analysis.yaml` 是同一組數值的文件版本。之後可改為由 notebook 直接讀取 config，避免兩處不一致。

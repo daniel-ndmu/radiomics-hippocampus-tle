@@ -58,6 +58,8 @@ results/     特徵矩陣、模型結果、圖表（執行後產生）
 ## 可重現性
 
 - OpenNeuro 資料集編號與版本：`ds005602` v1.0.0（2024-10-28，doi:10.18112/openneuro.ds005602.v1.0.0），只含原始 T1w 與 FLAIR。
+- 臨床資料表：figshare tables_metadata 的 `Metadata_Release_Anon.csv`（放在 Drive 的 `metadata/`，不進 repo）。原始表有一列完全重複（ID 209），程式去除後為 442 人；原始檔不修改。
+- FreeSurfer：figshare freesurfer_zip，每人一個 `<ID>.tar.gz`，下載連結格式 `https://figshare.com/ndownloader/files/<file_id>?private_link=b13b8bb41390d3f7a088`；只取出 `mri/aseg.mgz`、`mri/orig.mgz`、`stats/aseg.stats`。
 - FreeSurfer 分割、臨床與人口學資料表、切除遮罩由 IDEAS 團隊放在 figshare，連結見 OpenNeuro 的 README 與 cnnp-lab.com/ideas-data；實際使用的檔案與下載日期於第一次下載後填入。
 
 - 隨機種子 2026；分析設定見 `config/analysis.yaml`，建模開始後不再擴充。

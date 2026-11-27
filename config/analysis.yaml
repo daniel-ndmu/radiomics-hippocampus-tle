@@ -3,6 +3,11 @@
 seed: 2026
 inclusion:
   age: all_age_bands       # [B8, 2026-11-27] include all patients (minimum age at surgery 16); not restricted to >= 18; stated as a limitation
+  op_type: "T Lx"          # [B9, 2026-11-27] temporal lobe resection only (metadata Op_Type)
+  pathology: [HS, OTHER]   # [B9, 2026-11-27] exclude lesional / mixed pathologies: DNT, CAV, GL, FCD, DUAL, TREBLE, TBC
+  require_flair: true      # [B10, 2026-11-27] patients without 3D FLAIR are excluded (no imputation)
+  drop_exact_duplicate_rows: true   # metadata file has one fully duplicated row (ID 209); source file is left unchanged
+  fs_qc_before_split: true # FreeSurfer hippocampal segmentation QC (accept / reject) is completed before the split
 split:
   test_size: 0.30          # patient-level, stratified by side
   positive_class: right    # event = right-sided mTLE (minority class)
